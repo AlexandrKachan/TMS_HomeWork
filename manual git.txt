@@ -53,6 +53,20 @@ git checkout -b feature/update-txt-files
 
 
 
+!!!!!!!!!!!
+Переходим на master ветку и также обновляем этот текстовый файл в той же строке, что и фиче ветка:
+
+git checkout master
+… обновили test_resource.txt
+git add test_resource.txt
+git commit -m “added master header to txt”
+
+И теперь самый интересный момент: нужно смерджить изменения из feature/add-header ветки в master. Мы находимся в мастер ветке, поэтому нужно только написать:
+
+git merge feature/add-header
+
+Но мы получим результат с конфликтом в файле test_resource.txt:
+
 
 
 
