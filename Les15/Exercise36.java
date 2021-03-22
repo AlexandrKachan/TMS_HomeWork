@@ -7,14 +7,22 @@ public class Exercise36 {
         File[] files = new File("c:/TMS").listFiles();
 
 
-        for (File tipe : files) {
-            if (tipe.isDirectory()) {
-                System.out.println("Dir: " + tipe);
-                tipe.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
+                System.out.println("Dir - " + files[i].getPath());
             } else {
-                System.out.println("File: " + tipe);
-
+                System.out.println(" Files - " + files[i].getName());
             }
         }
     }
+//        for (File tipe : files) {
+//            if (tipe.isDirectory()) {
+//                System.out.println("Dir: " + tipe);
+//                tipe.listFiles();
+//            } else {
+//                System.out.println("File: " + tipe);
+//
+//            }
+//        }
+//    }
 }
