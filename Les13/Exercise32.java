@@ -10,14 +10,14 @@ class Exercise32 {
 
     public static void main(String[] args) {
         String text = "Частотный словарь, Частотный словарь, Частотный словарь, Частотный словарь." +
-                " Словарь может Словарь может Словарь может Словарь может " +
+                " может  может  может может " +
                 " по алфавиту по алфавиту по алфавиту по алфавиту по алфавиту ";
         Map<String, Integer> dictionary = new HashMap<>();
 
 
         StringTokenizer words = new StringTokenizer(text, " ,.");
 
-        System.out.println(words);
+      //  System.out.println(words);
 
         while (words.hasMoreTokens()) {
             String word = words.nextToken();

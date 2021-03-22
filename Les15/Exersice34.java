@@ -43,10 +43,5 @@ public class Exersice34 {
         for (Object hash : hashSet) {
             System.out.print(hash + " ");
         }
-
-
-
-
-
     }
 }

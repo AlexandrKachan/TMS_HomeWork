@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -6,8 +5,9 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Exercise33 {
 
+public class Exercise33 {
+//Создать файл с текстом, прочитать, подсчитать в тексте количество знаков препинания и слов.
 
     public static void main(String[] args) throws IOException {
         String text = "Раз - 111 два три. три, три! два 222  333 444?\n" +

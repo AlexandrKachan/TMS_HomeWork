@@ -14,11 +14,11 @@ public class Exercise31 {
         ArrayList<Integer> student3 = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            int j = 1 + (int) (Math.random() * 5);
+            int j = 1 + (int) (Math.random() * 10);
             student1.add(i, j);
-             j = 1 + (int) (Math.random() * 5);
+             j = 1 + (int) (Math.random() * 10);
             student2.add(i, j);
-              j = 1+(int) (Math.random() * 5);
+              j = 1+(int) (Math.random() * 10);
             student3.add(i, j);
         }
         System.out.println("Все оценки студента 1" + student1);
