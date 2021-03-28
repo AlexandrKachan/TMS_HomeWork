@@ -4,45 +4,94 @@ import com.tms.library.Book;
 import com.tms.library.Author;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DbConnectionExample {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) {
 
-       // Class.forName("com.mysql.cj.Driver");
+        // Class.forName("com.mysql.cj.Driver");
 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "7502456");
+        try {
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/library",
+                    "root",
+                    "7502456");
+            {
+            }
 
-        Statement statement = conn.createStatement();
+            Statement statement = conn.createStatement();
 
-        ResultSet rs = statement.executeQuery("select * from books");
-       // System.out.println(rs.getString(2));
+            ResultSet rs = statement.executeQuery("select * from books");
 
-        while (rs.next()) {
-            Book book = Book.builder()
-                    .id(rs.getInt(1))
-                    .name(rs.getString(2))
-                    .author(rs.getInt(3))
-                    .isbn(rs.getString(4))
-                    .build();
-            System.out.println(book);
+
+            while (rs.next()) {
+                Book.BookBuilder builder = Book.builder()
+                        .id(rs.getInt(1))
+                        .name(rs.getString(2))
+                        .genre(rs.getString(3))
+                        .isbn(rs.getString(4));
+
+
+                PreparedStatement ps = conn.prepareStatement("select * from book_author where book_id = ?");
+                ps.setInt(1, rs.getInt(1));
+                ResultSet resultSet = ps.executeQuery();
+                List<Author> authors = new ArrayList<>();
+                while (resultSet.next()) {
+                    authors.add(fetchAuthor(rs.getInt(1), conn));
+                }
+
+                Book book = builder.authors(authors)
+                        .build();
+
+
+
+
+                System.out.println(book);
+            }
+            statement.close();
+            rs.close();
+            conn.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+
         }
-
-        ResultSet rs2 = statement.executeQuery("select * from authors");
-        while (rs2.next()) {
-            Author author = Author.builder()
-                    .id(rs2.getInt(1))
-                    .first_name(rs2.getString(2))
-                    .last_name(rs2.getString(3))
-                    .build();
-            System.out.println(author);
-
-
-        }
-
-
-
 
 
     }
+
+
+    private static Author fetchAuthor(int authorId, Connection conn) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("select * from  authors where id = ?");
+        ps.setInt(1, authorId);
+        ResultSet rs = ps.executeQuery();
+        List<Author> authors = createAuthors(rs);
+        return !authors.isEmpty() ? authors.get(0) : null;
+    }
+
+
+    private static List<Author> createAuthors(ResultSet rs) throws SQLException {
+        List<Author> authors = new ArrayList<>();
+        while (rs.next()) {
+            authors.add(createAuthor(rs));
+        }
+        return authors;
+    }
+
+
+    private static Author createAuthor(ResultSet rs) throws SQLException {
+
+        Author a = Author.builder()
+                .id(rs.getInt(1))
+                .firstName(rs.getString(2))
+                .lastName(rs.getString(3))
+
+                .build();
+        return a;
+    }
+
 }

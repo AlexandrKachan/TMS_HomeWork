@@ -1,13 +1,20 @@
 package com.tms.library;
 
 import lombok.Builder;
-import lombok.ToString;
+import lombok.Data;
+
+
+@Data
 
 @Builder
-@ToString
+
+
+
 public class Author {
-    private int id;
-    private String first_name;
-    private String last_name;
+
+
+    private Integer id;
+    private String firstName;
+    private String lastName;
 
 }
