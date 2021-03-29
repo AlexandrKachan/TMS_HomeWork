@@ -6,9 +6,10 @@ import lombok.ToString;
 
 import java.util.List;
 
-@Data
+
 @Builder
 @ToString
+@Data
 
 public class Book{
     private int id;

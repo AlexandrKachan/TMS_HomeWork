@@ -4,75 +4,73 @@ import com.tms.library.Book;
 import com.tms.library.Author;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class DbConnectionExample {
+    private static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        // Class.forName("com.mysql.cj.Driver");
-
-        try {
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/library",
-                    "root",
-                    "7502456");
-            {
-            }
-
-            Statement statement = conn.createStatement();
-
-            ResultSet rs = statement.executeQuery("select * from books");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "7502456")) {
+            System.out.println("Choose way to fetch books: \n 1. Fast way (press '1') \n 2. Regular way (press '2'");
+            int option = sc.nextInt();
+            System.out.println("1. Добавить книгу\n" +
+                    "2. Отредактировать книгу\n" +
+                    "3. Удалить книгу\n" +
+                    "4. Вывести список всех книг\n" +
+                    "5. Вывести список книг определенного автора/жанра\n" +
+                    "6. Вывести список книг по алфавиту\n");
 
 
-            while (rs.next()) {
-                Book.BookBuilder builder = Book.builder()
-                        .id(rs.getInt(1))
-                        .name(rs.getString(2))
-                        .genre(rs.getString(3))
-                        .isbn(rs.getString(4));
 
+            if (option == 1) {
+                fetchAllBooksInAFastWay(conn);
+                //  updateLastBook(conn);
+                //fetchAllBooksInAFastWay(conn);
+                //deleteLastModifiedBook(conn);
+            } else {
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery("select * from books");
 
-                PreparedStatement ps = conn.prepareStatement("select * from book_author where book_id = ?");
-                ps.setInt(1, rs.getInt(1));
-                ResultSet resultSet = ps.executeQuery();
-                List<Author> authors = new ArrayList<>();
-                while (resultSet.next()) {
-                    authors.add(fetchAuthor(rs.getInt(1), conn));
+                while (rs.next()) {
+                    Book.BookBuilder builder = Book.builder()
+                            .id(rs.getInt(1))
+                            .name(rs.getString(2))
+                            .genre(rs.getString(3))
+                            .isbn(rs.getString(4));
+
+                    PreparedStatement ps = conn.prepareStatement("select * from book_author where book_id = ?");
+
+                    ps.setInt(1, rs.getInt(1));
+                    ResultSet resultSet = ps.executeQuery();
+
+                    List<Author> authors = new ArrayList<>();
+
+                    while (resultSet.next()) {
+                        authors.add(fetchAuthor(resultSet.getInt(2), conn));
+                    }
+
+                    Book book = builder.authors(authors)
+                            .build();
+
+                    System.out.println(book);
                 }
-
-                Book book = builder.authors(authors)
-                        .build();
-
-
-
-
-                System.out.println(book);
             }
-            statement.close();
-            rs.close();
-            conn.close();
-
-
         } catch (Exception e) {
             e.printStackTrace();
-
-
         }
-
-
     }
 
 
     private static Author fetchAuthor(int authorId, Connection conn) throws SQLException {
+       // System.out.println(authorId + " " + conn);
         PreparedStatement ps = conn.prepareStatement("select * from  authors where id = ?");
         ps.setInt(1, authorId);
         ResultSet rs = ps.executeQuery();
         List<Author> authors = createAuthors(rs);
         return !authors.isEmpty() ? authors.get(0) : null;
     }
-
 
     private static List<Author> createAuthors(ResultSet rs) throws SQLException {
         List<Author> authors = new ArrayList<>();
@@ -82,16 +80,60 @@ public class DbConnectionExample {
         return authors;
     }
 
-
     private static Author createAuthor(ResultSet rs) throws SQLException {
 
-        Author a = Author.builder()
+        Author author = Author.builder()
                 .id(rs.getInt(1))
                 .firstName(rs.getString(2))
                 .lastName(rs.getString(3))
-
                 .build();
-        return a;
+        return author;
+    }
+
+
+    private static void fetchAllBooksInAFastWay(Connection conn) throws SQLException {
+        String sql = "select b.id, b.name, b.genre, b.ISBN, a.id, a.first_name, a.last_name " +
+                "from books b " +
+                "    left join book_author ba on b.id = ba.book_id " +
+                "    left join authors a on a.id = ba.author_id";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+
+        Map<Book, List<Author>> books = new HashMap<>();
+
+
+        while (rs.next()) {
+            int bookId = rs.getInt(1);
+            Optional<Book> bookOptional = books.keySet().stream().filter(book -> book.getId() == bookId).findFirst();
+            bookOptional.ifPresent(book -> book.getAuthors().add(buildAuthor(rs)));
+            Book book = Book.builder()
+                    .id(rs.getInt(1))
+                    .name(rs.getString(2))
+                    .genre((rs.getString(3)))
+                    .isbn(rs.getString(4))
+                    .authors(new ArrayList<>(Arrays.asList(buildAuthor(rs))))
+                    .build();
+            books.put(book, book.getAuthors());
+
+
+        }
+        System.out.println(books.keySet());
+
+    }
+
+    private static Author buildAuthor(ResultSet rs) {
+        try {
+            return Author.builder()
+                    .id(rs.getInt(5))
+                    .firstName(rs.getString(6))
+                    .lastName(rs.getString(7))
+
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Author.builder().build();
     }
 
 }
