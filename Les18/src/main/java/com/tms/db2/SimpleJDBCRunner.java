@@ -24,10 +24,11 @@ public class SimpleJDBCRunner {
                         lst.add(new Abonent(id, phone, name));
                     }
                     if (lst.size() > 0) {
-                        System.out.println("База данных :" + lst);
+                        System.out.println("База данных :" + lst + "\n");
                     } else {
                         System.out.println("Not found");
                     }
+
                 } finally { // для 3-го блока try
                     /*
                      * закрыть ResultSet, если он был открыт
@@ -48,6 +49,7 @@ public class SimpleJDBCRunner {
                  */
                 if (st != null) { // для 2-го блока try
                     st.close();
+                    System.err.println("Statement close");
                 } else {
                     System.err.println("Statement не создан");
                 }
@@ -64,6 +66,7 @@ public class SimpleJDBCRunner {
             if (cn != null) {
                 try {
                     cn.close();
+                    System.err.println("Сonnection close.");
                 } catch (SQLException e) {
                     System.err.println("Сonnection close error: " + e);
                 }

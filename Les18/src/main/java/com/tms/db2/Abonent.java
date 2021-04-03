@@ -1,5 +1,9 @@
 package com.tms.db2;
 
+import lombok.Data;
+
+@Data
+
 public class Abonent extends Entity {
     private int phone;
     private String lastname;

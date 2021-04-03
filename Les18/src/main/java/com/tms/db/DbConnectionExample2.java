@@ -15,21 +15,24 @@ public class DbConnectionExample2 {
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "7502456")) {
 
-            System.out.println("Choose way to fetch books: \n 1. Fast way (press '1') \n 2. Regular way (press '2'");
+        //    System.out.println("Choose way to fetch books: \n 1. Fast way (press '1') \n 2. Regular way (press '2'");
+            System.out.println("1. Добавить книгу\n" +  //insertNewBookAndAuthor(conn);
+                    "2. Отредактировать книгу\n" +  //  updateLastBook(conn);
+                    "3. Удалить книгу\n" +           //deleteLastModifiedBook(conn);
+                    "4. Вывести список всех книг\n" +
+                    "5. Вывести список книг определенного автора/жанра\n" +
+                    "6. Вывести список книг по алфавиту\n");
             int option = sc.nextInt();
-//            System.out.println("1. Добавить книгу\n" +
-//                    "2. Отредактировать книгу\n" +
-//                    "3. Удалить книгу\n" +
-//                    "4. Вывести список всех книг\n" +
-//                    "5. Вывести список книг определенного автора/жанра\n" +
-//                    "6. Вывести список книг по алфавиту\n");
-//
-//            //insertNewBookAndAuthor(conn);
+
             if (option == 1) {
+                insertNewBookAndAuthor(conn);
+                // fetchAllBooksInAFastWay(conn);
+            } else if (option == 2) {
+                updateLastBook(conn);
+            } else if (option == 3) {
+                deleteLastModifiedBook(conn);
+            } else if (option == 4) {
                 fetchAllBooksInAFastWay(conn);
-              //  updateLastBook(conn);
-                //fetchAllBooksInAFastWay(conn);
-                //deleteLastModifiedBook(conn);
             } else {
                 Statement statement = conn.createStatement();
                 ResultSet rs = statement.executeQuery("select * from books");
@@ -56,6 +59,20 @@ public class DbConnectionExample2 {
                             .build();
 
                     System.out.println(book);
+                }
+                if (statement != null) {
+                        statement.close();
+                    System.err.println("Statement close");
+                } else {
+                    System.err.println("Statement не создан");
+                }
+                if (conn != null) {
+                    try {
+                        conn.close();
+                        System.err.println("Сonnection close.");
+                    } catch (SQLException e) {
+                        System.err.println("Сonnection close error: " + e);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -178,7 +195,7 @@ public class DbConnectionExample2 {
                     .build();
             books.put(book, book.getAuthors());
         }
-        System.out.println(books.keySet() );
+        System.out.println(books.keySet());
 
     }
 

@@ -34,6 +34,7 @@ public class DbConnectionExample {
                 ResultSet rs = statement.executeQuery("select * from books");
 
                 while (rs.next()) {
+
                     Book.BookBuilder builder = Book.builder()
                             .id(rs.getInt(1))
                             .name(rs.getString(2))
@@ -48,13 +49,27 @@ public class DbConnectionExample {
                     List<Author> authors = new ArrayList<>();
 
                     while (resultSet.next()) {
-                        authors.add(fetchAuthor(resultSet.getInt(2), conn));
+                        authors.add(fetchAuthor(resultSet.getInt("author_id"), conn));
                     }
 
                     Book book = builder.authors(authors)
                             .build();
 
                     System.out.println(book);
+                }
+                if (statement != null) {
+                    statement.close();
+                    System.err.println("Statement close");
+                } else {
+                    System.err.println("Statement не создан");
+                }
+                if (conn != null) {
+                    try {
+                        conn.close();
+                        System.err.println("Сonnection close.");
+                    } catch (SQLException e) {
+                        System.err.println("Сonnection close error: " + e);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -134,6 +149,7 @@ public class DbConnectionExample {
             e.printStackTrace();
         }
         return Author.builder().build();
+
     }
 
 }
