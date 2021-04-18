@@ -1,12 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JSP - Hello World</title>
+    <title>JSP - Hello World !!!</title>
 </head>
 <body>
-<h1><%= "Hello World!123123123213" %></h1>
+<%!
+    int a = 10;
+    String b = "String";
+%>
+
+<h1><%= "Hello World! ! !" %>
+</h1>
 <br/>
-<a href="/hello">Hello Servlet!!!!!!!</a>
+
+<%@include file="list.jsp" %>
+
+<a href="hello">Hello Servlet!!!!!!!</a>
 </body>
 </html>
