@@ -1,4 +1,4 @@
-package com.example.servlet.servlet;
+package com.example.servlet;
 
 import com.example.servlet.entity.ProductEntity;
 import com.example.servlet.repository.ProductRepositoty;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CatalogServlet extends HttpServlet {
 
-    private ProductRepositoty productRepositoty =  ProductRepositoty.getINSTANCE();
+    private ProductRepositoty productRepositoty = new ProductRepositoty();
 
     @Override
     public void init() throws ServletException {
