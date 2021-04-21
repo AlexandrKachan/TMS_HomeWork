@@ -11,7 +11,7 @@
 <%-- <jsp:forward page="/"/> --%>
 
 
-<c:redirect url="/catalog" />
+<c:redirect url="/login" />
 
 
 </body>

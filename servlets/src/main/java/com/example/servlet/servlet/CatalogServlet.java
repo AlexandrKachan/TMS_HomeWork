@@ -1,8 +1,7 @@
-package com.example.servlet;
+package com.example.servlet.servlet;
 
 import com.example.servlet.entity.ProductEntity;
-import com.example.servlet.repository.ProductRepositoty;
-import jakarta.servlet.ServletConfig;
+import com.example.servlet.repository.ProductRepository;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,14 +10,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name = "catalog", urlPatterns = "/catalog")
 
 public class CatalogServlet extends HttpServlet {
 
-    private ProductRepositoty productRepositoty = new ProductRepositoty();
+    private ProductRepository productRepository = new ProductRepository();
 
     @Override
     public void init() throws ServletException {
@@ -27,7 +25,7 @@ public class CatalogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final List<ProductEntity> products = productRepositoty.getProducts();
+        final List<ProductEntity> products = productRepository.getProducts();
         request.setAttribute("products", products);
         final ServletContext servletContext = getServletContext();
         servletContext.setAttribute("products", products);
