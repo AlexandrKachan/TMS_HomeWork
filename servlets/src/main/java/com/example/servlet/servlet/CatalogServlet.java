@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CatalogServlet extends HttpServlet {
 
-    private ProductRepository productRepository = new ProductRepository();
+    private ProductRepository productRepository = ProductRepository.getINSTANCE();
 
     @Override
     public void init() throws ServletException {
