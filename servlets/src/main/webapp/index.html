@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:height="http://java.sun.com/jsf/html" xmlns:width="http://xmlns.jcp.org/jsf/html">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartHome</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<nav class="navbar-expand-md navbar-light bg-light sticky-top">
+    <!--
+Вместо navbar-light bg-light можно прописать navbar-dark bg-dark.
+Тогда шапка и текст в ней будет темным.
+-->
+    <div class="container-fluid">
+        <a href="#" class="navbar-brad"><img src="img/SHome.png" height="90"></a>
+        <button class="navbar-toggled" type="button" data-toggle="collapse" data-target="#navbarResp">
+            <span class="navbar-toggled-icon"><</span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResp">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Аутентификация</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Дом</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Баня</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Курятник</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Теплица</a>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+<div class="carousel slide" data-ride="carousel" id="slides">
+    <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active"><</li>
+        <li data-target="#slides" data-slide-to="1"><</li>
+        <li data-target="#slides" data-slide-to="2"><</li>
+        <li data-target="#slides" data-slide-to="3"><</li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="img/hause.jpg" >
+            <div class="carousel-caption">
+                <h1 class="display-2">Дом</h1>
+                <h2>Датчики температуры и влажности</h2>
+                <button type="button" class="btn-outline-dark btn-lg">Посмотреть</button>
+                <button type="button" class="btn-warning btn-lg">Переключить</button>
+            </div>
+        </div>
+        <div class="carousel-item ">
+            <img src="img/sauna.jpg" >
+            <div class="carousel-caption">
+                <h1 class="display-2">Баня</h1>
+                <h2>Датчики температуры и влажности</h2>
+                <button type="button" class="btn-outline-dark btn-lg">Посмотреть</button>
+                <button type="button" class="btn-warning btn-lg">Переключить</button>
+            </div>
+        </div>
+        <div class="carousel-item ">
+            <img src="img/chicenhause.jpg">
+            <div class="carousel-caption">
+                <<h1 class="display-2">Курятник</h1>
+                <h2>Датчики температуры и влажности</h2>
+                <button type="button" class="btn-outline-dark btn-lg">Посмотреть</button>
+                <button type="button" class="btn-warning btn-lg">Переключить</button>
+            </div>
+        </div>
+        <div class="carousel-item ">
+            <img src="img/greenhause.jpg" >
+            <div class="carousel-caption">
+                <h1 class="display-2">Теплица</h1>
+                <h2>Датчики температуры и влажности</h2>
+                <button type="button" class="btn-outline-dark btn-lg">Посмотреть</button>
+                <button type="button" class="btn-warning btn-lg">Переключить</button>
+                lorem 6
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
