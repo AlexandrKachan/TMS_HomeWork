@@ -7,17 +7,12 @@
     <title>JSP - Hello World !!!</title>
 </head>
 <body>
-<%!
-    int a = 10;
-    String b = "String";
-%>
 
-<h1><%= "Hello World! ! !" %>
-</h1>
-<br/>
+<%-- <jsp:forward page="/"/> --%>
 
-<%@include file="list.jsp" %>
 
-<a href="hello">Hello Servlet!!!!!!!</a>
+<c:redirect url="/main" />
+
+
 </body>
-</html>
+</html>login
