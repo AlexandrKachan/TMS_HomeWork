@@ -32,9 +32,9 @@
                             Action
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="change">Edit Phone</a></li>
-                            <li><a class="dropdown-item" href="remove">Remove phone</a></li>
-                            <li><a class="dropdown-item" href="addProduct">Add new phone</a></li>
+                            <li><a class="dropdown-item" href="change">Edit product</a></li>
+                            <li><a class="dropdown-item" href="remove">Remove product</a></li>
+                            <li><a class="dropdown-item" href="addProduct">Add new product</a></li>
                         </ul>
                     </li>
                 </ul>
